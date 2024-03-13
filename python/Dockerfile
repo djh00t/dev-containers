@@ -49,4 +49,4 @@ ENV PYTHON_VERSION=3.12
 RUN conda install -y python=${PYTHON_VERSION} pip
 
 # Cleanup
-RUN conda clean -tipsy
+RUN conda clean --all --yes
