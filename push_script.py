@@ -57,7 +57,7 @@ def generate_commit_message():
         print(f"Failed to generate commit message: {e}\nResponse: {response_text}")
         sys.exit(1)
 
-def create_or_update_pull_request(commit_message):
+def create_or_update_pull_request(commit_message, branch_name):
     headers = {
         "Authorization": f"token {GITHUB_TOKEN}",
         "Accept": "application/vnd.github.v3+json"
