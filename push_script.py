@@ -7,10 +7,19 @@ OPENAI_API_KEY = os.getenv('OPENAI_API_KEY')
 GITHUB_TOKEN = os.getenv('GITHUB_TOKEN')
 REPO_NAME = os.getenv('GITHUB_REPOSITORY')
 
-if REPO_NAME is None:
-    raise ValueError("GITHUB_REPOSITORY environment variable is not set.")
-else:
-    OWNER = REPO_NAME.split('/')[0]
+def get_repo_name():
+    remote_url = subprocess.getoutput('git config --get remote.origin.url')
+    if not remote_url:
+        raise ValueError("Could not determine the repository name from the git configuration.")
+    repo_name = remote_url.split('/')[-1].rstrip('.git')
+    return repo_name
+
+def get_owner():
+    repo_name = get_repo_name()
+    return repo_name.split('/')[0]
+
+OWNER = get_owner()
+REPO_NAME = get_repo_name()
 
 def generate_commit_message():
     prompt = "Generate a commit message for the following changes:\n\n"
@@ -56,7 +65,7 @@ def main():
     current_branch = subprocess.getoutput('git rev-parse --abbrev-ref HEAD')
     if current_branch == 'main':
         branch_name = os.getenv('BRANCH_NAME')
-        subprocess.run(['git', 'checkout', '-b', branch_name])
+        branch_name = subprocess.getoutput('git rev-parse --abbrev-ref HEAD')
         subprocess.run(['git', 'tag', '-a', branch_name, '-m', f"Release {branch_name}"])
         subprocess.run(['git', 'push', 'origin', branch_name, '--tags'])
     else:
