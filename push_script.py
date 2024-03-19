@@ -3,22 +3,23 @@ import sys
 import subprocess
 import json
 import requests
+from urllib.parse import urlparse
 
 OPENAI_API_KEY = os.getenv('OPENAI_API_KEY')
 GITHUB_TOKEN = os.getenv('GITHUB_TOKEN')
-REPO_NAME = os.getenv('GITHUB_REPOSITORY')
 
-def get_repo_name():
-    remote_url = subprocess.getoutput('git config --get remote.origin.url')
+def get_git_remote_info():
+    remote_url = subprocess.check_output(['git', 'config', '--get', 'remote.origin.url']).decode().strip()
     if not remote_url:
-        raise ValueError("Could not determine the repository name from the git configuration.")
-    repo_name = remote_url.split('/')[-1].rstrip('.git')
-    return repo_name
-
-def get_owner():
-    repo_name = get_repo_name()
-    return repo_name.split('/')[0]
-    return repo_name.split('/')[0]
+        raise ValueError("Could not determine the git remote URL from the git configuration.")
+    parsed_url = urlparse(remote_url)
+    if parsed_url.netloc == 'github.com':
+        path_parts = parsed_url.path.strip('/').split('/')
+        if len(path_parts) == 2:
+            owner, repo = path_parts
+            repo = repo.rstrip('.git')
+            return owner, repo
+    raise ValueError("The git remote URL is not a valid GitHub repository URL.")
 
 def generate_commit_message():
     if not OPENAI_API_KEY:
@@ -56,10 +57,7 @@ def generate_commit_message():
         sys.exit(1)
 
 def create_or_update_pull_request(commit_message, branch_name):
-    full_repo_name = os.getenv('GITHUB_REPOSITORY')
-    if not full_repo_name or '/' not in full_repo_name:
-        raise ValueError("GITHUB_REPOSITORY environment variable is not set or is invalid.")
-    OWNER, REPO_NAME = full_repo_name.split('/')
+    OWNER, REPO_NAME = get_git_remote_info()
     headers = {
         "Authorization": f"token {GITHUB_TOKEN}",
         "Accept": "application/vnd.github.v3+json"
@@ -103,6 +101,7 @@ def main():
         generate_changelog()
         subprocess.run(['git', 'commit', '-am', commit_message])
         subprocess.run(['git', 'push', 'origin', current_branch])
+        owner, repo_name = get_git_remote_info()
         create_or_update_pull_request(commit_message, current_branch)
 
         # Additional logic for generating commit message and pull request notes
