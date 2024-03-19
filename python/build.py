@@ -25,11 +25,10 @@ def main():
         sys.exit(1)
 
     # Check if the builder already exists, if not create a new builder
-    builder_name = f"{app_name}_builder"
-    builder_check = subprocess.run(["docker", "buildx", "inspect", builder_name], stdout=subprocess.PIPE, stderr=subprocess.PIPE)
+    builder_check = subprocess.run(["docker", "buildx", "inspect", "mybuilder"], stdout=subprocess.PIPE, stderr=subprocess.PIPE)
     if builder_check.returncode != 0:
-        subprocess.run(["docker", "buildx", "create", "--name", builder_name], check=True)
-    subprocess.run(["docker", "buildx", "use", builder_name], check=True)
+        subprocess.run(["docker", "buildx", "create", "--name", "mybuilder"], check=True)
+    subprocess.run(["docker", "buildx", "use", "mybuilder"], check=True)
 
     # Start up the builder
     subprocess.run(["docker", "buildx", "inspect", "--bootstrap"], check=True)
@@ -55,7 +54,7 @@ def main():
         sys.exit(1)
 
     # Remove the builder when done
-    subprocess.run(["docker", "buildx", "rm", builder_name], check=True)
+    # subprocess.run(["docker", "buildx", "rm", "mybuilder"], check=True)
 
 if __name__ == "__main__":
     main()
