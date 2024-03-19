@@ -27,7 +27,13 @@ def generate_commit_message():
     changes = subprocess.getoutput('git diff --name-only main...$(git rev-parse --abbrev-ref HEAD)')
     data = {
         "model": "gpt-3.5-turbo",
-        "messages": [
+        "prompt": prompt + changes,
+        "max_tokens": 150,
+        "temperature": 0.5,
+        "top_p": 1,
+        "frequency_penalty": 0,
+        "presence_penalty": 0,
+        "stop": ["\n"]
             {
                 "role": "system",
                 "content": "You are a helpful assistant."
@@ -44,12 +50,17 @@ def generate_commit_message():
     try:
         response = requests.post("https://api.openai.com/v1/completions", headers=headers, json=data)
         response.raise_for_status()
-        completion = response.json()['choices'][0]['text']
-        commit_message = completion.strip()
-        return commit_message
+        response_data = response.json()
+        if 'choices' in response_data and len(response_data['choices']) > 0:
+            completion = response_data['choices'][0]['text']
+            commit_message = completion.strip()
+            return commit_message
+        else:
+            raise ValueError("No completion found in the response.")
         return commit_message.strip()
     except requests.exceptions.RequestException as e:
-        print(f"Failed to generate commit message: {e}")
+        response_text = e.response.text if e.response else "No response text available."
+        print(f"Failed to generate commit message: {e}\nResponse: {response_text}")
         sys.exit(1)
 
 def create_or_update_pull_request(commit_message):
