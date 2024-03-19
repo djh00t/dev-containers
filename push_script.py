@@ -11,8 +11,8 @@ def get_repo_name():
     remote_url = subprocess.getoutput('git config --get remote.origin.url')
     if not remote_url:
         raise ValueError("Could not determine the repository name from the git configuration.")
-    repo_name = remote_url.split('/')[-1].rstrip('.git')
-    return repo_name
+        repo_name = remote_url.split('/')[-1].rstrip('.git')
+        return repo_name
 
 def get_owner():
     repo_name = get_repo_name()
