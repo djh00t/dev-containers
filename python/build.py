@@ -61,9 +61,6 @@ def main():
         else:
             print("Docker registry login credentials are not set in config.json.")
             sys.exit(1)
-        else:
-            print("Docker registry login credentials are not set in config.json.")
-            sys.exit(1)
 
     result = subprocess.run([
         "docker", "buildx", "build", "--platform", "linux/amd64,linux/arm64",
