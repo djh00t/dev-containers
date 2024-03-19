@@ -25,34 +25,28 @@ def generate_commit_message():
         raise ValueError("OpenAI API key is not set. Please set the OPENAI_API_KEY environment variable.")
     prompt = "Generate a commit message for the following changes:\n\n"
     changes = subprocess.getoutput('git diff --name-only main...$(git rev-parse --abbrev-ref HEAD)')
-    data = {
-        "model": "text-davinci-003",
-        "prompt": [
+    messages = [
             {
                 "role": "system",
-                "content": "You are a helpful assistant."
+                "content": prompt + changes
             },
             {
                 "role": "user",
-                "content": prompt + changes
+                "content": "Please generate a commit message for the changes listed above."
             }
-        ],
-        "max_tokens": 150,
-        "temperature": 0.5,
-        "top_p": 1,
-        "frequency_penalty": 0,
-        "presence_penalty": 0,
-        "stop": ["\n"]
     }
     headers = {
         "Authorization": f"Bearer {OPENAI_API_KEY}"
     }
     try:
-        response = requests.post("https://api.openai.com/v1/engines/text-davinci-003/completions", headers=headers, json=data)
+        response = requests.post("https://api.openai.com/v1/chat/completions", headers=headers, json={
+            "model": "gpt-3.5-turbo",
+            "messages": messages
+        })
         response.raise_for_status()
         response_data = response.json()
-        if 'choices' in response_data and len(response_data['choices']) > 0:
-            completion = response_data['choices'][0]['text']
+        if 'choices' in response_data and response_data['choices'] and 'message' in response_data['choices'][0]:
+            completion = response_data['choices'][0]['message']['content']
             commit_message = completion.strip()
             return commit_message
         else:
