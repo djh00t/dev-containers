@@ -16,9 +16,7 @@ def get_repo_name():
 
 def get_owner():
     repo_name = get_repo_name()
-    OWNER = repo_name.split('/')[0]
-    return OWNER
-REPO_NAME = get_repo_name()
+    return repo_name.split('/')[0]
     return repo_name.split('/')[0]
 
 def generate_commit_message():
