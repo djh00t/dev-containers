@@ -37,4 +37,8 @@ push:
 	else \
 		export GITHUB_REPOSITORY; \
 	fi
+	@# Remove 'aider:' prefix from all commit messages
+	@GIT_SEQUENCE_EDITOR="sed -i '' -e 's/^pick \(.*\) aider:/pick \1 /'" git rebase -i --root --autosquash
+	@# Update the changelog to remove 'aider:' prefix
+	@sed -i '' -e 's/aider: //g' CHANGELOG.md
 	python3 push_script.py
