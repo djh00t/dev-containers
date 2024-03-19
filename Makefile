@@ -1,3 +1,5 @@
+LOG_LEVEL ?= INFO
+
 USERNAME := $(shell whoami)
 TIMESTAMP := $(shell date +%Y%m%d%H%M%S)
 BRANCH_NAME := $(USERNAME)-$(TIMESTAMP)
