@@ -106,3 +106,4 @@
 - 2024-03-19 - aider: - fda0344da688144ae64027551f0bad7fe008e1f3 - Add sed command to remove 'aider:' prefix from CHANGELOG.md in Makefile push target. (David Hooton)
 - 2024-03-19 - aider: - 1f67d41a7f41c485d9b1392f618268e959669f37 - Add check for unstaged changes in Makefile push target and stash them if present, then re-apply after rebase. (David Hooton)
 - 2024-03-19 - Add - 907b02c2a364998af44148c1e3e39b9930108c4c - CI/CD workflow configuration, update changelog, and tweak build scripts for Python project. (David Hooton)
+- 2024-03-19 - Update - 5fc10fa8181ab30f1887d9315163c31240c1c4bc - CI/CD workflow, update CHANGELOG, and make changes to build scripts and files for Python project. (David Hooton)
