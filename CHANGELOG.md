@@ -123,3 +123,4 @@
 - 2024-03-19 - Add - f09237ef73f5c18a8b49ce721450471413389829 - CI/CD workflow, update CHANGELOG, improve Makefile, enhance build script, refactor push script, manage Python version and dependencies in version file and requirements, and streamline Python build process. (David Hooton)
 - 2024-03-19 - wip - 5252b74ef908033d3fe21f70f54b4a79fca6a0ae - (David Hooton)
 - 2024-03-19 - aider: - 0e98c3a5d4e2f9aea92a3f162a354ad40290b4be - Remove 'aider:' prefix from commit messages and changelog in Makefile push target. (David Hooton)
+- 2024-03-19 - Add - e079d67ccea0cfb4aaeaff8c367bff5b13bc5e34 - CI/CD workflow configuration, update changelog, and refactor build process for Python project. (David Hooton)
