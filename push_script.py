@@ -6,7 +6,11 @@ import requests
 OPENAI_API_KEY = os.getenv('OPENAI_API_KEY')
 GITHUB_TOKEN = os.getenv('GITHUB_TOKEN')
 REPO_NAME = os.getenv('GITHUB_REPOSITORY')
-OWNER = REPO_NAME.split('/')[0]
+
+if REPO_NAME is None:
+    raise ValueError("GITHUB_REPOSITORY environment variable is not set.")
+else:
+    OWNER = REPO_NAME.split('/')[0]
 
 def generate_commit_message():
     prompt = "Generate a commit message for the following changes:\n\n"
