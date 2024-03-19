@@ -76,10 +76,14 @@ def create_or_update_pull_request(commit_message, branch_name):
     return response.json()
 
 def generate_changelog():
-    changelog = subprocess.getoutput('git log main..HEAD --oneline')
-    if not changelog:
-        return "No new changes to report."
-    return changelog
+    changelog_entries = subprocess.getoutput("git log --reverse --format='%ad %H %s (%an)' --date=short").split('\n')
+    changelog_content = ""
+    for entry in changelog_entries:
+        date, commit_id, message, author = entry.split(' ', 3)
+        changelog_content += f"- {date} - {message} - {commit_id} - {author}\n"
+    with open('CHANGELOG.md', 'w') as changelog_file:
+        changelog_file.write(changelog_content)
+    return changelog_content
 
 def main():
     current_branch = subprocess.getoutput('git rev-parse --abbrev-ref HEAD')
@@ -94,6 +98,7 @@ def main():
             git_diffs = subprocess.getoutput(f'git diff --name-only main...{current_branch} | xargs -I {{}} git diff main...{current_branch} -- {{}}')
             print(git_diffs)
         commit_message = generate_commit_message()
+        generate_changelog()
         subprocess.run(['git', 'commit', '-am', commit_message])
         subprocess.run(['git', 'push', 'origin', current_branch])
         create_or_update_pull_request(commit_message, current_branch)
