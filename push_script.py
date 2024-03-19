@@ -12,13 +12,9 @@ def get_git_remote_info():
     remote_url = subprocess.check_output(['git', 'config', '--get', 'remote.origin.url']).decode().strip()
     if not remote_url:
         raise ValueError("Could not determine the git remote URL from the git configuration.")
-    parsed_url = urlparse(remote_url)
-    if parsed_url.netloc == 'github.com':
-        path_parts = parsed_url.path.strip('/').split('/')
-        if len(path_parts) == 2:
-            owner, repo = path_parts
-            repo = repo.rstrip('.git')
-            return owner, repo
+    match = re.match(r'^(?:https?://|git@)github\.com[/:](?P<owner>[^/]+)/(?P<repo>[^/]+?)(?:\.git)?$', remote_url)
+    if match:
+        return match.group('owner'), match.group('repo')
     raise ValueError("The git remote URL is not a valid GitHub repository URL.")
 
 def generate_commit_message():
