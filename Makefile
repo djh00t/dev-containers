@@ -41,13 +41,13 @@ push:
 			git diff --name-only main...$$current_branch | xargs -I {} git diff main...$$current_branch -- {}; \
 		fi; \
 		echo "Generating changelog from diffs..."; \
-		diff_content=$$(git diff --name-only main...$$current_branch | xargs -I {} git diff main...$$current_branch -- {}); \
-		json_payload=$$(echo "{\"model\": \"gpt-3.5-turbo\", \"messages\": [{\"role\": \"system\", \"content\": \"You are an expert software engineer. Review the provided context and diffs which are about to be committed to a git repo. Generate a *SHORT* 1 line, 1 sentence commit message that describes the changes. The commit message MUST be in the past tense. It must describe the changes *which have been made* in the diffs! Reply with JUST the commit message, without quotes, comments, questions, etc!\"}, {\"role\": \"user\", \"content\": \"$$diff_content\"}]}" | jq -c .); \
+		diff_content=$$(git diff --name-only main...$$current_branch | xargs -I {} git diff main...$$current_branch -- {} | jq -aRs .); \
+		json_payload="{\"model\": \"gpt-3.5-turbo\", \"messages\": [{\"role\": \"system\", \"content\": \"You are an expert software engineer. Review the provided context and diffs which are about to be committed to a git repo. Generate a *SHORT* 1 line, 1 sentence commit message that describes the changes. The commit message MUST be in the past tense. It must describe the changes *which have been made* in the diffs! Reply with JUST the commit message, without quotes, comments, questions, etc!\"}, {\"role\": \"user\", \"content\": $$diff_content}]}" ; \
 		if [ "$$LOG_LEVEL" = "DEBUG" ]; then \
 			echo "JSON payload for OpenAI API:"; \
 			echo "$$json_payload"; \
 		fi; \
-		git diff --name-only main...$$current_branch | xargs -I {} git diff main...$$current_branch -- {} | curl -s -X POST -H "Content-Type: application/json" -H "Authorization: Bearer $$OPENAI_API_KEY" -d "$$json_payload" https://api.openai.com/v1/chat/completions > commit_message.txt; \
+		echo $$json_payload | curl -s -X POST -H "Content-Type: application/json" -H "Authorization: Bearer $$OPENAI_API_KEY" -d @- https://api.openai.com/v1/chat/completions > commit_message.txt; \
 		json_payload=$$(echo "{\"model\": \"gpt-3.5-turbo\", \"messages\": [{\"role\": \"system\", \"content\": \"You are an expert software engineer. Review the provided context and diffs which are about to be committed to a git repo. Generate a *SHORT* 1 line, 1 sentence commit message that describes the changes. The commit message MUST be in the past tense. It must describe the changes *which have been made* in the diffs! Reply with JUST the commit message, without quotes, comments, questions, etc!\"}]}" | jq -c .); \
 		if [ "$$LOG_LEVEL" = "DEBUG" ]; then \
 			echo "JSON payload for OpenAI API:"; \
