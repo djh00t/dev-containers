@@ -87,3 +87,5 @@
 - 2024-03-19 - Add - 3efebc3e312e8ef9ef0a4bf6ba192ad9d0706749 - CI/CD workflow, update changelog, enhance build process, and refactor Python scripts and files. (David Hooton)
 - 2024-03-19 - Update - 7ae79262e70b07cbc54f9cb33bffdd372ea6e185 - CI/CD workflow, changelog, Makefile, and build scripts for Python project. Add push script for automation. Update Python version file, build process, and dependencies list. (David Hooton)
 - 2024-03-19 - aider: - 384aef1377c56672450e6257767add3b1c172fba - Fix issue with setting `REPO_NAME` variable in push script. (David Hooton)
+- 2024-03-19 - Add - f1d2255db692341abebc2d1decac50b695cbc3e2 - CI/CD workflow, update CHANGELOG, and refactor build process for Python scripts. (David Hooton)
+- 2024-03-19 - aider: - 8f0cd258c3339ae2a798824be816f67a4f5a4db9 - Fix extraction of `OWNER` and `REPO_NAME` from `GITHUB_REPOSITORY` environment variable in push script. (David Hooton)
