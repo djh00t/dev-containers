@@ -101,3 +101,7 @@
 - 2024-03-19 - aider: - 38fdc884122f6fb9bfc698ef9f1bff4c167397fb - Update `push_script.py` to correctly parse the git remote URL using a regular expression for both HTTPS and SSH remote URLs. (David Hooton)
 - 2024-03-19 - Update - edd468417084d642495b16bfbf12281df7af5eba - CI/CD workflow setup, add new entries to CHANGELOG, modify Makefile and build scripts, and update Python version, dependencies, and build process. (David Hooton)
 - 2024-03-19 - aider: - 9d323a32b129a3b58f5e90cac87320b3e367047d - Add import statement for the `re` module in `push_script.py` to resolve `NameError`. (David Hooton)
+- 2024-03-19 - Update - 886baa6387822c1f43d27e0f8b9c82b1d67ab555 - CI/CD workflow, update changelog, and modify build scripts and tools for Python project. (David Hooton)
+- 2024-03-19 - aider: - 958812ef52bb631a30d253f85e51b4ba2402eef2 - Update CI/CD workflow, update changelog, and modify build scripts and tools for Python project. (David Hooton)
+- 2024-03-19 - aider: - fda0344da688144ae64027551f0bad7fe008e1f3 - Add sed command to remove 'aider:' prefix from CHANGELOG.md in Makefile push target. (David Hooton)
+- 2024-03-19 - aider: - 1f67d41a7f41c485d9b1392f618268e959669f37 - Add check for unstaged changes in Makefile push target and stash them if present, then re-apply after rebase. (David Hooton)
