@@ -35,7 +35,7 @@ push:
 		git push origin $(BRANCH_NAME) --tags; \
 	else \
 		echo "Generating changelog from diffs..."; \
-		git diff --name-only main...$$current_branch | xargs -I {} git diff main...$$current_branch -- {} | curl -X POST -H "Content-Type: text/plain" --data-binary @- https://api.openai.com/v1/engines/text-davinci-003/completions -d '{"prompt": "You are an expert software engineer.\nReview the provided context and diffs which are about to be committed to a git repo.\nGenerate a *SHORT* 1 line, 1 sentence commit message per change that describes the purpose of the changes.\nEach commit message MUST be in the past tense.\nIt must describe the changes *which have been made* in the diffs!\nReply with JUST the commit message, without quotes, comments, questions, etc!", "temperature": 0.7}' > changelog.txt; \
+		git diff --name-only main...$$current_branch | xargs -I {} git diff main...$$current_branch -- {} | curl -X POST -H "Content-Type: application/json" -H "Authorization: Bearer $$OPENAI_API_KEY" --data-binary @- https://api.openai.com/v1/chat/completions -d '{"model": "gpt-3.5-turbo", "messages": [{"role": "system", "content": "You are an expert software engineer. Review the provided context and diffs which are about to be committed to a git repo. Generate a *SHORT* 1 line, 1 sentence commit message per change that describes the purpose of the changes. Each commit message MUST be in the past tense. It must describe the changes *which have been made* in the diffs! Reply with JUST the commit message, without quotes, comments, questions, etc!"}]}' > changelog.txt; \
 		echo "Changelog generated."; \
 		echo "Changelog content:"; \
 		cat changelog.txt; \
