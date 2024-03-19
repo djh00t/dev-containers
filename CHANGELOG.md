@@ -129,5 +129,6 @@
 - 2024-03-19 - Update - af11d7202c9565ad97cf56c1800d425ba98ebf09 - CI/CD workflow, modify changelog, improve build scripts, and update Python dependencies. (David Hooton)
 - 2024-03-19 - Update - 716b4c49901919301ebd4d8fc52059357fcb861e - CHANGELOG.md (David Hooton)
 - 2024-03-19 - Add - 5bf9975448a932cef7a412b69020f4ef02eaa222 - CI/CD workflow, update CHANGELOG, enhance Makefile and build scripts, and update Python version and dependencies. (David Hooton)
-- 2024-03-19 - Update - 2082d5446ecf3c3f67f51da94161cc08c105c2cf - CHANGELOG.md (David Hooton)
-- 2024-03-19 - Add - ed0e68fac50aba472fd4f48008e616b2684a17cc - CI/CD workflow, update changelog, refactor build process, and enhance Python scripts and dependencies. (David Hooton)
+- 2024-03-19 - Update - 6953469e3e4399ae56e18ec6bdfb342f189fceae - CHANGELOG.md (David Hooton)
+- 2024-03-19 - Add - ed8afff8dcd6d0ca75c6644b95eb194d5508c7b6 - CI/CD workflow, update changelog, refactor build process, and enhance Python scripts and dependencies. (David Hooton)
+- 2024-03-19 - Update - 00c3967b2037b52e60e13d9dc7b5bd3af67114f4 - CHANGELOG.md (David Hooton)
