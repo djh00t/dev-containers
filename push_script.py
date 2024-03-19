@@ -84,7 +84,7 @@ def generate_changelog():
 def main():
     current_branch = subprocess.getoutput('git rev-parse --abbrev-ref HEAD')
     if current_branch == 'main':
-        branch_name = os.getenv('BRANCH_NAME')
+        branch_name = subprocess.getoutput('git symbolic-ref --short HEAD')
         branch_name = subprocess.getoutput('git rev-parse --abbrev-ref HEAD')
         subprocess.run(['git', 'tag', '-a', branch_name, '-m', f"Release {branch_name}"])
         subprocess.run(['git', 'push', 'origin', branch_name, '--tags'])
@@ -96,7 +96,7 @@ def main():
         commit_message = generate_commit_message()
         subprocess.run(['git', 'commit', '-am', commit_message])
         subprocess.run(['git', 'push', 'origin', current_branch])
-        create_or_update_pull_request(commit_message)
+        create_or_update_pull_request(commit_message, current_branch)
 
         # Additional logic for generating commit message and pull request notes
         # ...
