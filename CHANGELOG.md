@@ -132,3 +132,4 @@
 - 2024-03-19 - Update - 6953469e3e4399ae56e18ec6bdfb342f189fceae - CHANGELOG.md (David Hooton)
 - 2024-03-19 - Add - ed8afff8dcd6d0ca75c6644b95eb194d5508c7b6 - CI/CD workflow, update changelog, refactor build process, and enhance Python scripts and dependencies. (David Hooton)
 - 2024-03-19 - Update - 00c3967b2037b52e60e13d9dc7b5bd3af67114f4 - CHANGELOG.md (David Hooton)
+- 2024-03-19 - Update - a062a622416acf926bf86615d01fc07a2a6e56bf - CI/CD workflow configuration, add version to .github/workflows/ci-cd.yml, update CHANGELOG.md, optimize Makefile, refactor build scripts, add push_script.py, modify python versioning in VERSION file, update build process in python/build.py and python/build.sh, and update python dependencies in requirements.txt. (David Hooton)
