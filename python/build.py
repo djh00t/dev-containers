@@ -54,7 +54,7 @@ def main():
         sys.exit(1)
 
     # Remove the builder when done
-    # subprocess.run(["docker", "buildx", "rm", "mybuilder"], check=True)
+    subprocess.run(["docker", "buildx", "rm", "mybuilder"], check=True)
 
 if __name__ == "__main__":
     main()
