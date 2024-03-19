@@ -112,3 +112,5 @@
 - 2024-03-19 - Add - 3f22f6ef3d7f8766bd20778490749e419ab9e5b7 - CI/CD workflow, update changelog, and refactor build scripts and configuration for Python project. (David Hooton)
 - 2024-03-19 - aider: - c8c88430e40f613b155d1c50ada6690f93b99b08 - Add check to update existing pull request if it already exists before creating a new one in `push_script.py`. (David Hooton)
 - 2024-03-19 - aider: - 4569ce2487c69772135a7ac302f9b5632220594f - Fix indentation error in push_script.py file. (David Hooton)
+- 2024-03-19 - Add - ab760f97d9058c3028693e370bb17268e65599a3 - CI/CD workflow, update changelog, and make improvements to build scripts and files for Python scripts and dependencies. (David Hooton)
+- 2024-03-19 - aider: - 4b3ca7d4b0d81e626591cf165827daf1967add5b - Add CI/CD workflow, update changelog, and make improvements to build scripts and files for Python scripts and dependencies. (David Hooton)
