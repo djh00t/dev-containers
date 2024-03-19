@@ -46,12 +46,10 @@ def generate_commit_message():
         response.raise_for_status()
         response_data = response.json()
         if 'choices' in response_data and response_data['choices'] and 'message' in response_data['choices'][0]:
-            completion = response_data['choices'][0]['message']['content']
-            commit_message = completion.replace('aider: ', '').strip()
+            commit_message = response_data['choices'][0]['message']['content'].strip()
             return commit_message
         else:
             raise ValueError("No completion found in the response.")
-        return commit_message.strip()
     except requests.exceptions.RequestException as e:
         response_text = e.response.text if e.response else "No response text available."
         print(f"Failed to generate commit message: {e}\nResponse: {response_text}")
