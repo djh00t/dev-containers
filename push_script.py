@@ -48,7 +48,7 @@ def generate_commit_message():
         "Authorization": f"Bearer {OPENAI_API_KEY}"
     }
     try:
-        response = requests.post("https://api.openai.com/v1/completions", headers=headers, json=data)
+        response = requests.post("https://api.openai.com/v1/engines/text-davinci-003/completions", headers=headers, json=data)
         response.raise_for_status()
         response_data = response.json()
         if 'choices' in response_data and len(response_data['choices']) > 0:
