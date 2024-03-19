@@ -56,6 +56,7 @@ def generate_commit_message():
         sys.exit(1)
 
 def create_or_update_pull_request(commit_message, branch_name):
+    OWNER = get_owner()
     headers = {
         "Authorization": f"token {GITHUB_TOKEN}",
         "Accept": "application/vnd.github.v3+json"
