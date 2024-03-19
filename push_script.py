@@ -47,7 +47,7 @@ def generate_commit_message():
         response_data = response.json()
         if 'choices' in response_data and response_data['choices'] and 'message' in response_data['choices'][0]:
             completion = response_data['choices'][0]['message']['content']
-            commit_message = completion.strip()
+            commit_message = completion.replace('aider: ', '').strip()
             return commit_message
         else:
             raise ValueError("No completion found in the response.")
