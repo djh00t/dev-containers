@@ -92,7 +92,7 @@ def create_or_update_pull_request(commit_message, branch_name):
     return response.json()
 
 def generate_changelog():
-    changelog_entries = subprocess.getoutput("git log --reverse --format='%ad %H %s (%an)' --date=short").split('\n')
+    changelog_entries = subprocess.getoutput("git log --reverse --format='%ad %H %s (%an)' --date=short | sed -e 's/aider: //g'").split('\n')
     changelog_content = ""
     for entry in changelog_entries:
         date, commit_id, message, author = entry.split(' ', 3)
