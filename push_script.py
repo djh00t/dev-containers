@@ -74,13 +74,13 @@ def create_or_update_pull_request(commit_message, branch_name):
         return update_response.json()
     else:
         # Create a new pull request
-    data = {
-        "title": pr_title,
-        "body": pr_body,
-        "head": branch_name,
-        "base": "main"
-    }
-    response = requests.post(f"https://api.github.com/repos/{OWNER}/{REPO_NAME}/pulls", headers=headers, json=data)
+        data = {
+            "title": pr_title,
+            "body": pr_body,
+            "head": branch_name,
+            "base": "main"
+        }
+        response = requests.post(f"https://api.github.com/repos/{OWNER}/{REPO_NAME}/pulls", headers=headers, json=data)
     try:
         response.raise_for_status()
     except requests.exceptions.HTTPError as e:
