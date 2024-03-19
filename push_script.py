@@ -26,14 +26,8 @@ def generate_commit_message():
     prompt = "Generate a commit message for the following changes:\n\n"
     changes = subprocess.getoutput('git diff --name-only main...$(git rev-parse --abbrev-ref HEAD)')
     data = {
-        "model": "gpt-3.5-turbo",
-        "prompt": prompt + changes,
-        "max_tokens": 150,
-        "temperature": 0.5,
-        "top_p": 1,
-        "frequency_penalty": 0,
-        "presence_penalty": 0,
-        "stop": ["\n"]
+        "model": "text-davinci-003",
+        "prompt": [
             {
                 "role": "system",
                 "content": "You are a helpful assistant."
@@ -42,7 +36,13 @@ def generate_commit_message():
                 "role": "user",
                 "content": prompt + changes
             }
-        ]
+        ],
+        "max_tokens": 150,
+        "temperature": 0.5,
+        "top_p": 1,
+        "frequency_penalty": 0,
+        "presence_penalty": 0,
+        "stop": ["\n"]
     }
     headers = {
         "Authorization": f"Bearer {OPENAI_API_KEY}"
