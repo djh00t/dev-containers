@@ -42,10 +42,11 @@ def generate_commit_message():
         "Authorization": f"Bearer {OPENAI_API_KEY}"
     }
     try:
-        response = requests.post("https://api.openai.com/v1/chat/completions", headers=headers, json=data)
+        response = requests.post("https://api.openai.com/v1/completions", headers=headers, json=data)
         response.raise_for_status()
-        messages = response.json()['choices'][0]['messages']
-        commit_message = next(msg for msg in messages if msg['role'] == 'assistant' and 'content' in msg)['content']
+        completion = response.json()['choices'][0]['text']
+        commit_message = completion.strip()
+        return commit_message
         return commit_message.strip()
     except requests.exceptions.RequestException as e:
         print(f"Failed to generate commit message: {e}")
