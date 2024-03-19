@@ -41,12 +41,12 @@ def main():
     docker_registry = os.getenv('DOCKER_REGISTRY')
     docker_username = os.getenv('DOCKER_USERNAME')
     docker_password = os.getenv('DOCKER_PASSWORD')
-    if docker_registry and docker_username and docker_password:
+    if docker_username and docker_password:
         login_result = subprocess.run([
             "docker", "login",
-            "--username", docker_username,
-            "--password", docker_password,
-            docker_registry
+            "--username", docker_username, "--password-stdin",
+            "djh00t/dev-containers-python-3.12"
+        ], input=docker_password.encode(), stdout=subprocess.PIPE, stderr=subprocess.PIPE)
         ], stdout=subprocess.PIPE, stderr=subprocess.PIPE)
         if login_result.returncode != 0:
             print("Docker login failed. Check your credentials.")
@@ -57,7 +57,7 @@ def main():
 
     result = subprocess.run([
         "docker", "buildx", "build", "--platform", "linux/amd64,linux/arm64",
-        "--tag", f"{app_name}:{version}", "--tag", f"{app_name}:latest",
+        "--tag", f"djh00t/dev-containers-python-3.12:{version}", "--tag", f"djh00t/dev-containers-python-3.12:latest",
         "--push", "."
     ], stdout=subprocess.PIPE, stderr=subprocess.PIPE)
 
