@@ -37,11 +37,10 @@ def generate_commit_message():
     try:
         response = requests.post("https://api.openai.com/v1/engines/davinci/completions", headers=headers, json=data)
         response.raise_for_status()
+        return response.json()['choices'][0]['text'].strip()
     except requests.exceptions.RequestException as e:
         print(f"Failed to generate commit message: {e}")
         sys.exit(1)
-    response = requests.post("https://api.openai.com/v1/engines/davinci/completions", headers=headers, json=data)
-    response.raise_for_status()
     return response.json()['choices'][0]['text'].strip()
 
 def create_or_update_pull_request(commit_message):
