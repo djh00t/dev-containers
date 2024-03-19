@@ -1,4 +1,4 @@
-LOG_LEVEL ?= INFO
+LOG_LEVEL ?= DEBUG
 
 USERNAME := $(shell whoami)
 TIMESTAMP := $(shell date +%Y%m%d%H%M%S)
