@@ -1,5 +1,6 @@
 #!/usr/bin/env python3
 import os
+import json
 import subprocess
 import sys
 
@@ -15,9 +16,13 @@ def increment_version(version):
 def main():
     check_buildx_available()
 
-    # Load environment variables from .env file
-    from dotenv import load_dotenv
-    load_dotenv()
+    # Load Docker configuration from ~/.docker/config.json
+    docker_config_path = os.path.expanduser('~/.docker/config.json')
+    if not os.path.exists(docker_config_path):
+        print("Docker config not found at ~/.docker/config.json. Make sure Docker is configured correctly.")
+        sys.exit(1)
+    with open(docker_config_path, 'r') as config_file:
+        docker_config = json.load(config_file)
 
     app_name = os.getenv('APP_NAME')
     repo = os.getenv('DOCKER_REPO')
@@ -39,10 +44,12 @@ def main():
         version = file.read().strip()
     print(f"Building version {version}")
     # Log in to Docker registry
-    docker_registry = os.getenv('DOCKER_REGISTRY')
-    docker_username = os.getenv('DOCKER_USERNAME')
-    docker_password = os.getenv('DOCKER_PASSWORD')
-    if docker_username and docker_password:
+    auths = docker_config.get('auths', {})
+    registry_auth = auths.get(repo)
+    if registry_auth:
+        docker_username = registry_auth.get('username')
+        docker_password = registry_auth.get('password')
+        if docker_username and docker_password:
         login_result = subprocess.run([
             "docker", "login",
             "--username", docker_username, "--password-stdin",
@@ -51,9 +58,9 @@ def main():
         if login_result.returncode != 0:
             print("Docker login failed. Check your credentials.")
             sys.exit(1)
-    else:
-        print("Docker registry login credentials are not set.")
-        sys.exit(1)
+        else:
+            print("Docker registry login credentials are not set in config.json.")
+            sys.exit(1)
 
     result = subprocess.run([
         "docker", "buildx", "build", "--platform", "linux/amd64,linux/arm64",
