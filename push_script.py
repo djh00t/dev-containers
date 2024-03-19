@@ -20,8 +20,11 @@ def get_owner():
 
 OWNER = get_owner()
 REPO_NAME = get_repo_name()
+    return repo_name.split('/')[0]
 
 def generate_commit_message():
+    if not OPENAI_API_KEY:
+        raise ValueError("OpenAI API key is not set. Please set the OPENAI_API_KEY environment variable.")
     prompt = "Generate a commit message for the following changes:\n\n"
     changes = subprocess.getoutput('git diff --name-only main...$(git rev-parse --abbrev-ref HEAD)')
     data = {
@@ -33,6 +36,12 @@ def generate_commit_message():
     headers = {
         "Authorization": f"Bearer {OPENAI_API_KEY}"
     }
+    try:
+        response = requests.post("https://api.openai.com/v1/engines/davinci/completions", headers=headers, json=data)
+        response.raise_for_status()
+    except requests.exceptions.RequestException as e:
+        print(f"Failed to generate commit message: {e}")
+        sys.exit(1)
     response = requests.post("https://api.openai.com/v1/engines/davinci/completions", headers=headers, json=data)
     response.raise_for_status()
     return response.json()['choices'][0]['text'].strip()
