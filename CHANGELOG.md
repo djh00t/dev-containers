@@ -138,3 +138,5 @@
 - 2024-03-19 - Update - 4ed9674e76b8662db577586091604d9ee96bbda1 - CI/CD workflow configuration, add entries to CHANGELOG, and enhance build automation scripts for the Python project. (David Hooton)
 - 2024-03-19 - Remove - ee6d38c12533bb2bd385565d3bd8d92b3ddfafb6 - "aider:" prefix from commit messages before updating `CHANGELOG.md` in `push_script.py`. (David Hooton)
 - 2024-03-19 - Update - 9e17f41ac124efe29d9634249082387c25282200 - CI/CD workflow, add version to Python, modify build scripts, and update dependencies in requirements.txt (David Hooton)
+- 2024-03-19 - Add - 6d39a696323706000b6228db693658980a6ffdf0 - CI/CD workflow, update changelog, and adjust build process for Python project. (David Hooton)
+- 2024-03-19 - Update - 69a6d8d3b8b507a353ab15bcdbfac633490da3e9 - `push_script.py` to stage and commit `CHANGELOG.md` along with other changes when `make push` runs. (David Hooton)
