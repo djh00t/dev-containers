@@ -30,4 +30,8 @@ confirm_branch:
 	fi
 
 push:
+	@if [ -z "$${GITHUB_REPOSITORY}" ]; then \
+		echo "GITHUB_REPOSITORY environment variable is not set. Please set it before running 'make push' (e.g., export GITHUB_REPOSITORY=\"<owner>/<repo>\")"; \
+		exit 1; \
+	fi
 	python3 push_script.py
