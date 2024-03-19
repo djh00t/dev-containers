@@ -134,4 +134,6 @@
 - 2024-03-19 - Update - 00c3967b2037b52e60e13d9dc7b5bd3af67114f4 - CHANGELOG.md (David Hooton)
 - 2024-03-19 - Update - a062a622416acf926bf86615d01fc07a2a6e56bf - CI/CD workflow configuration, add version to .github/workflows/ci-cd.yml, update CHANGELOG.md, optimize Makefile, refactor build scripts, add push_script.py, modify python versioning in VERSION file, update build process in python/build.py and python/build.sh, and update python dependencies in requirements.txt. (David Hooton)
 - 2024-03-19 - Update - 25de9a3903bc34c26e618656e50686461651050b - CHANGELOG.md (David Hooton)
-- 2024-03-19 - aider: - ee7ea3bad8e26ae22d48e31def7341822f36dfd9 - Remove the `aider:` prefix handling from the `Makefile`. (David Hooton)
+- 2024-03-19 - Remove - ee7ea3bad8e26ae22d48e31def7341822f36dfd9 - the `aider:` prefix handling from the `Makefile`. (David Hooton)
+- 2024-03-19 - Update - 4ed9674e76b8662db577586091604d9ee96bbda1 - CI/CD workflow configuration, add entries to CHANGELOG, and enhance build automation scripts for the Python project. (David Hooton)
+- 2024-03-19 - Remove - ee6d38c12533bb2bd385565d3bd8d92b3ddfafb6 - "aider:" prefix from commit messages before updating `CHANGELOG.md` in `push_script.py`. (David Hooton)
