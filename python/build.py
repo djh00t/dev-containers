@@ -20,8 +20,12 @@ def main():
     load_dotenv()
 
     app_name = os.getenv('APP_NAME')
+    repo = os.getenv('REPO')
     if not app_name:
         print("APP_NAME environment variable is not set.")
+        sys.exit(1)
+    if not repo:
+        print("REPO environment variable is not set.")
         sys.exit(1)
 
     # Check if the builder already exists, if not create a new builder
@@ -45,7 +49,7 @@ def main():
         login_result = subprocess.run([
             "docker", "login",
             "--username", docker_username, "--password-stdin",
-            "djh00t/dev-containers-python-3.12"
+            f"{repo}/{app_name}"
         ], input=docker_password.encode(), stdout=subprocess.PIPE, stderr=subprocess.PIPE)
         ], stdout=subprocess.PIPE, stderr=subprocess.PIPE)
         if login_result.returncode != 0:
@@ -57,7 +61,7 @@ def main():
 
     result = subprocess.run([
         "docker", "buildx", "build", "--platform", "linux/amd64,linux/arm64",
-        "--tag", f"djh00t/dev-containers-python-3.12:{version}", "--tag", f"djh00t/dev-containers-python-3.12:latest",
+        "--tag", f"{repo}/{app_name}:{version}", "--tag", f"{repo}/{app_name}:latest",
         "--push", "."
     ], stdout=subprocess.PIPE, stderr=subprocess.PIPE)
 
