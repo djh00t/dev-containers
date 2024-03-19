@@ -69,7 +69,14 @@ def create_or_update_pull_request(commit_message, branch_name):
         "base": "main"
     }
     response = requests.post(f"https://api.github.com/repos/{OWNER}/{REPO_NAME}/pulls", headers=headers, json=data)
-    response.raise_for_status()
+    try:
+        response.raise_for_status()
+    except requests.exceptions.HTTPError as e:
+        if e.response.status_code == 422:
+            # Log the response body for debugging purposes
+            print(f"GitHub API returned 422 Unprocessable Entity: {e.response.json()}")
+        else:
+            raise
     return response.json()
 
 def generate_changelog():
