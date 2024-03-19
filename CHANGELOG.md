@@ -99,3 +99,5 @@
 - 2024-03-19 - aider: - a08f7f057f5f30a2fc8ea6df5cfdf67fdec84145 - Updated Makefile to correctly determine GITHUB_REPOSITORY from git remote origin using `git remote get-url origin` and simplified `sed` command for handling different URL formats. (David Hooton)
 - 2024-03-19 - Add - 0fc7e33bfa8bcb82c91ef5656211cd5de0d7e2b1 - CI/CD workflow file, update CHANGELOG, refactor Makefile and build scripts, improve push script, update Python version file and dependencies. (David Hooton)
 - 2024-03-19 - aider: - 38fdc884122f6fb9bfc698ef9f1bff4c167397fb - Update `push_script.py` to correctly parse the git remote URL using a regular expression for both HTTPS and SSH remote URLs. (David Hooton)
+- 2024-03-19 - Update - edd468417084d642495b16bfbf12281df7af5eba - CI/CD workflow setup, add new entries to CHANGELOG, modify Makefile and build scripts, and update Python version, dependencies, and build process. (David Hooton)
+- 2024-03-19 - aider: - 9d323a32b129a3b58f5e90cac87320b3e367047d - Add import statement for the `re` module in `push_script.py` to resolve `NameError`. (David Hooton)
