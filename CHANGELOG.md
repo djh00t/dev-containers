@@ -85,3 +85,5 @@
 - 2024-03-19 - Add - 93a8c8303e3800c3f40cd93fd6948fe15c1b072e - CI/CD workflow, update changelog, and refactor build processes. Updated Makefile, build script, push script, Python version file, build scripts, and requirements file. (David Hooton)
 - 2024-03-19 - aider: - 63d5a4015e509a451668618587343ad26e106297 - Fix `NameError` by defining `OWNER` variable before using it in `create_or_update_pull_request` function. (David Hooton)
 - 2024-03-19 - Add - 3efebc3e312e8ef9ef0a4bf6ba192ad9d0706749 - CI/CD workflow, update changelog, enhance build process, and refactor Python scripts and files. (David Hooton)
+- 2024-03-19 - Update - 7ae79262e70b07cbc54f9cb33bffdd372ea6e185 - CI/CD workflow, changelog, Makefile, and build scripts for Python project. Add push script for automation. Update Python version file, build process, and dependencies list. (David Hooton)
+- 2024-03-19 - aider: - 384aef1377c56672450e6257767add3b1c172fba - Fix issue with setting `REPO_NAME` variable in push script. (David Hooton)
