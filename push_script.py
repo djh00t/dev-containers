@@ -56,8 +56,10 @@ def generate_commit_message():
         sys.exit(1)
 
 def create_or_update_pull_request(commit_message, branch_name):
-    REPO_NAME = get_repo_name()
-    OWNER = REPO_NAME.split('/')[0]
+    full_repo_name = os.getenv('GITHUB_REPOSITORY')
+    if not full_repo_name or '/' not in full_repo_name:
+        raise ValueError("GITHUB_REPOSITORY environment variable is not set or is invalid.")
+    OWNER, REPO_NAME = full_repo_name.split('/')
     headers = {
         "Authorization": f"token {GITHUB_TOKEN}",
         "Accept": "application/vnd.github.v3+json"
