@@ -30,7 +30,7 @@ confirm_branch:
 	fi
 
 push:
-	@GITHUB_REPOSITORY=$$(git config --get remote.origin.url | sed -n 's/.*:\/\/github.com\/\([^\/]*\)\/\([^\/]*\)\(\.git\)*$/\1\/\2/p'); \
+	@GITHUB_REPOSITORY=$$(git remote -v | grep '^origin' | grep '(push)' | sed -n 's/.*:\/\/github.com\/\([^\/]*\)\/\([^\/]*\)\(\.git\)* .*$$/\1\/\2/p'); \
 	if [ -z "$$GITHUB_REPOSITORY" ]; then \
 		echo "Unable to determine GITHUB_REPOSITORY from the git remote origin. Please ensure you have a remote named 'origin' pointing to a GitHub repository."; \
 		exit 1; \
