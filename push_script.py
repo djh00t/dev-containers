@@ -64,7 +64,7 @@ def main():
         subprocess.run(['git', 'commit', '-am', commit_message])
         subprocess.run(['git', 'push', 'origin', current_branch])
         create_or_update_pull_request(commit_message)
-        create_or_update_pull_request(commit_message)
+
         # Additional logic for generating commit message and pull request notes
         # ...
 
