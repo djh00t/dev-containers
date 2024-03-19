@@ -20,12 +20,9 @@ def main():
     load_dotenv()
 
     app_name = os.getenv('APP_NAME')
-    repo = os.getenv('REPO')
-    if not app_name:
-        print("APP_NAME environment variable is not set.")
-        sys.exit(1)
-    if not repo:
-        print("REPO environment variable is not set.")
+    repo = os.getenv('DOCKER_REPO')
+    if not app_name or not repo:
+        print("APP_NAME and DOCKER_REPO environment variables must be set.")
         sys.exit(1)
 
     # Check if the builder already exists, if not create a new builder
