@@ -30,34 +30,7 @@ confirm_branch:
 	fi
 
 push:
-	@GITHUB_REPOSITORY=$$(git remote get-url origin | sed -n -e 's/^.*github\.com[:\/]\([^\/]*\)\/\([^\/]*\)\(\.git\)*$$/\1\/\2/p'); \
-	if [ -z "$$GITHUB_REPOSITORY" ]; then \
-		echo "Unable to determine GITHUB_REPOSITORY from the git remote origin. Please ensure you have a remote named 'origin' pointing to a GitHub repository."; \
-		exit 1; \
-	else \
-		export GITHUB_REPOSITORY; \
-	fi
-	@# Check for unstaged changes and stash them if any
-	@if git diff --quiet; then \
-		echo "No unstaged changes detected."; \
-	else \
-		echo "Stashing unstaged changes."; \
-		git stash push -u -m "Auto-stashed by Makefile for 'make push' command"; \
-		stash_applied=1; \
-	fi
+	@# Run the push script to handle commit messages and changelog
 
-	@# Remove 'aider:' prefix from all commit messages and changelog
-	@GIT_SEQUENCE_EDITOR="sed -i.bak -e 's/^pick \(.*\) aider:/pick \1 /' || sed -i '' -e 's/^pick \(.*\) aider:/pick \1 /'" git rebase -i --root --autosquash
-	@sed -i.bak -e 's/aider: - //g' CHANGELOG.md || sed -i '' -e 's/aider: - //g' CHANGELOG.md
-	@rm -f CHANGELOG.md.bak
-	@git add CHANGELOG.md
-	@git commit --amend --no-edit
-	@# Run the push script after cleaning up commit messages and changelog
 	
 	python3 push_script.py
-	@git add CHANGELOG.md
-	@git commit -m "Update CHANGELOG.md"
-	@if [ "$$stash_applied" = "1" ]; then \
-		echo "Re-applying stashed changes."; \
-		git stash pop; \
-	fi
