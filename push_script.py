@@ -16,9 +16,8 @@ def get_repo_name():
 
 def get_owner():
     repo_name = get_repo_name()
-    return repo_name.split('/')[0]
-
-OWNER = get_owner()
+    OWNER = repo_name.split('/')[0]
+    return OWNER
 REPO_NAME = get_repo_name()
     return repo_name.split('/')[0]
 
