@@ -97,3 +97,5 @@
 - 2024-03-19 - aider: - 1cf650993edd60b1e83427d904a80d2630ac2f79 - Updated Makefile to use `git remote -v` for retrieving the git repository URL and `git branch --show-current` for getting the current branch name. (David Hooton)
 - 2024-03-19 - aider: - d8e3e7a3541659f89eb9090c15b677acfddaab6f - Updated Makefile to determine GITHUB_REPOSITORY from git remote origin using git commands and adjusted sed expressions to handle different URL formats. (David Hooton)
 - 2024-03-19 - aider: - a08f7f057f5f30a2fc8ea6df5cfdf67fdec84145 - Updated Makefile to correctly determine GITHUB_REPOSITORY from git remote origin using `git remote get-url origin` and simplified `sed` command for handling different URL formats. (David Hooton)
+- 2024-03-19 - Add - 0fc7e33bfa8bcb82c91ef5656211cd5de0d7e2b1 - CI/CD workflow file, update CHANGELOG, refactor Makefile and build scripts, improve push script, update Python version file and dependencies. (David Hooton)
+- 2024-03-19 - aider: - 38fdc884122f6fb9bfc698ef9f1bff4c167397fb - Update `push_script.py` to correctly parse the git remote URL using a regular expression for both HTTPS and SSH remote URLs. (David Hooton)
