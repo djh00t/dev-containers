@@ -45,14 +45,16 @@ push:
 		git stash push -u -m "Auto-stashed by Makefile for 'make push' command"; \
 		stash_applied=1; \
 	fi
+	@# Generate changelog and remove 'aider: - ' prefix
+	python3 push_script.py
 	@# Update the changelog to remove 'aider: - ' prefix
-	@sed -i '' -e 's/^aider: - //' CHANGELOG.md
+	@sed -i '' -e 's/aider: - //g' CHANGELOG.md
+	@git add CHANGELOG.md
+	@git commit -m "Update CHANGELOG.md to remove 'aider: - ' prefix"
 	@# Remove 'aider:' prefix from all commit messages
 	@GIT_SEQUENCE_EDITOR="sed -i '' -e 's/^pick \(.*\) aider:/pick \1 /'" git rebase -i --root --autosquash
 	@if [ "$$stash_applied" = "1" ]; then \
 		echo "Re-applying stashed changes."; \
 		git stash pop; \
 	fi
-	@# Update the changelog to remove 'aider: - ' prefix
-	@sed -i '' -e 's/aider: - //g' CHANGELOG.md
 	python3 push_script.py
