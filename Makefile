@@ -30,8 +30,6 @@ confirm_branch:
 	fi
 
 push:
-	@current_branch=$$(git rev-parse --abbrev-ref HEAD); \
-push:
 	@set -e; \
 	current_branch=$$(git rev-parse --abbrev-ref HEAD); \
 	if [ "$$current_branch" = "main" ]; then \
