@@ -48,10 +48,11 @@ push:
 			echo "JSON payload for OpenAI API:"; \
 			echo "$$json_payload"; \
 		fi; \
-		echo $$json_payload | curl -s -X POST -H "Content-Type: application/json" -H "Authorization: Bearer $$OPENAI_API_KEY" -d @- https://api.openai.com/v1/chat/completions > commit_message.txt; \
-		echo "Changelog generated."; \
-		echo "Changelog content:"; \
-		cat changelog.txt; \
+		echo $$json_payload | curl -s -X POST -H "Content-Type: application/json" -H "Authorization: Bearer $$OPENAI_API_KEY" -d @- https://api.openai.com/v1/chat/completions > changelog.txt; \
+		if [ "$$LOG_LEVEL" = "DEBUG" ]; then \
+			echo "Changelog content:"; \
+			cat changelog.txt; \
+		fi; \
 		echo "Changelog generated."; \
 		if [ "$$LOG_LEVEL" = "DEBUG" ]; then \
 			echo "Commit message content:"; \
@@ -65,7 +66,5 @@ push:
 			echo "Pull request notes content:"; \
 			cat pr_notes.txt; \
 		fi; \
-		echo "Pull request notes content:"; \
-		cat pr_notes.txt; \
 		git push origin $$current_branch; \
 	fi
