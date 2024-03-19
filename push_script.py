@@ -30,7 +30,8 @@ def create_or_update_pull_request(commit_message):
         "Accept": "application/vnd.github.v3+json"
     }
     pr_title = commit_message.split('\n')[0]
-    pr_body = f"## Changes\n{commit_message}\n\n---\n*This PR was generated using OpenAI's ChatGPT-3.5 Turbo.*"
+    changelog = generate_changelog()
+    pr_body = f"## Changelog\n{changelog}\n\n## Commit Message\n{commit_message}\n\n---\n*This PR was generated using OpenAI's ChatGPT-3.5 Turbo.*"
     data = {
         "title": pr_title,
         "body": pr_body,
@@ -40,6 +41,12 @@ def create_or_update_pull_request(commit_message):
     response = requests.post(f"https://api.github.com/repos/{OWNER}/{REPO_NAME}/pulls", headers=headers, json=data)
     response.raise_for_status()
     return response.json()
+
+def generate_changelog():
+    changelog = subprocess.getoutput('git log main..HEAD --oneline')
+    if not changelog:
+        return "No new changes to report."
+    return changelog
 
 def main():
     current_branch = subprocess.getoutput('git rev-parse --abbrev-ref HEAD')
@@ -56,6 +63,7 @@ def main():
         commit_message = generate_commit_message()
         subprocess.run(['git', 'commit', '-am', commit_message])
         subprocess.run(['git', 'push', 'origin', current_branch])
+        create_or_update_pull_request(commit_message)
         create_or_update_pull_request(commit_message)
         # Additional logic for generating commit message and pull request notes
         # ...
