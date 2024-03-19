@@ -26,18 +26,27 @@ def generate_commit_message():
     prompt = "Generate a commit message for the following changes:\n\n"
     changes = subprocess.getoutput('git diff --name-only main...$(git rev-parse --abbrev-ref HEAD)')
     data = {
-        "model": "text-davinci-003",
-        "prompt": prompt + changes,
-        "temperature": 0.5,
-        "max_tokens": 150
+        "model": "gpt-3.5-turbo",
+        "messages": [
+            {
+                "role": "system",
+                "content": "You are a helpful assistant."
+            },
+            {
+                "role": "user",
+                "content": prompt + changes
+            }
+        ]
     }
     headers = {
         "Authorization": f"Bearer {OPENAI_API_KEY}"
     }
     try:
-        response = requests.post("https://api.openai.com/v1/engines/davinci/completions", headers=headers, json=data)
+        response = requests.post("https://api.openai.com/v1/chat/completions", headers=headers, json=data)
         response.raise_for_status()
-        return response.json()['choices'][0]['text'].strip()
+        messages = response.json()['choices'][0]['message']['content']
+        commit_message = next(msg for msg in messages if msg['role'] == 'assistant')['content']
+        return commit_message.strip()
     except requests.exceptions.RequestException as e:
         print(f"Failed to generate commit message: {e}")
         sys.exit(1)
