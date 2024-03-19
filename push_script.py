@@ -61,7 +61,7 @@ def create_or_update_pull_request(commit_message, branch_name):
     }
     pr_title = commit_message.split('\n')[0]
     changelog = generate_changelog()
-    pr_body = f"## Changelog\n{changelog}\n\n## Commit Message\n{commit_message}\n\n---\n*This PR was generated using OpenAI's ChatGPT-3.5 Turbo.*"
+    pr_body = f"## Changelog\n{changelog}\n\n## Commit Message\n{commit_message}\n\n## Branch\n{branch_name}"
     # Check if a pull request already exists for the branch
     existing_pr_response = requests.get(f"https://api.github.com/repos/{OWNER}/{REPO_NAME}/pulls?head={OWNER}:{branch_name}", headers=headers)
     existing_pr_response.raise_for_status()

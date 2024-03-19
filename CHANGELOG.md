@@ -137,3 +137,4 @@
 - 2024-03-19 - Remove - ee7ea3bad8e26ae22d48e31def7341822f36dfd9 - the `aider:` prefix handling from the `Makefile`. (David Hooton)
 - 2024-03-19 - Update - 4ed9674e76b8662db577586091604d9ee96bbda1 - CI/CD workflow configuration, add entries to CHANGELOG, and enhance build automation scripts for the Python project. (David Hooton)
 - 2024-03-19 - Remove - ee6d38c12533bb2bd385565d3bd8d92b3ddfafb6 - "aider:" prefix from commit messages before updating `CHANGELOG.md` in `push_script.py`. (David Hooton)
+- 2024-03-19 - Update - 9e17f41ac124efe29d9634249082387c25282200 - CI/CD workflow, add version to Python, modify build scripts, and update dependencies in requirements.txt (David Hooton)
