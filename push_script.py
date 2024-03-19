@@ -34,7 +34,7 @@ def generate_commit_message():
                 "role": "user",
                 "content": "Please generate a commit message for the changes listed above."
             }
-    }
+    ]
     headers = {
         "Authorization": f"Bearer {OPENAI_API_KEY}"
     }
