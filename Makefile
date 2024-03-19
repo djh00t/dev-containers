@@ -35,9 +35,14 @@ push:
 		git push origin $(BRANCH_NAME) --tags; \
 	else \
 		echo "Generating changelog from diffs..."; \
-		git diff --name-only main...$$current_branch | xargs -I {} git diff main...$$current_branch -- {} | curl -s -X POST -H "Content-Type: application/json" -H "Authorization: Bearer $$OPENAI_API_KEY" --data-binary @- https://api.openai.com/v1/chat/completions --data '{"model": "gpt-3.5-turbo", "messages": [{"role": "system", "content": "You are an expert software engineer. Review the provided diffs and break them into logical changes. For the commit message you will generate a *SHORT* 1 line, 1 sentence overall commit summary that gives a high level explanation of the changes. For the PR notes you will generate a *SHORT* 1 line, 1 sentence message per change that describes the intended outcome of each change, return the list of changes in a bullet point list. Each returned message MUST be in the past tense. It must describe the changes *which have been made* in the diffs! Reply with JUST the commit message and the PR notes, without quotes, comments, questions, etc!"}]}' > changelog.txt; \
+		git diff --name-only main...$$current_branch | xargs -I {} git diff main...$$current_branch -- {} | curl -s -X POST -H "Content-Type: application/json" -H "Authorization: Bearer $$OPENAI_API_KEY" --data-binary @- https://api.openai.com/v1/chat/completions --data '{"model": "gpt-3.5-turbo", "messages": [{"role": "system", "content": "You are an expert software engineer.\nReview the provided context and diffs which are about to be committed to a git repo.\nGenerate a *SHORT* 1 line, 1 sentence commit message that describes the changes.\nThe commit message MUST be in the past tense.\nIt must describe the changes *which have been made* in the diffs!\nReply with JUST the commit message, without quotes, comments, questions, etc!"}]}' > commit_message.txt; \
 		echo "Changelog generated."; \
 		echo "Changelog content:"; \
 		cat changelog.txt; \
+		echo "Generating pull request notes..."; \
+		git diff --name-only main...$$current_branch | xargs -I {} git diff main...$$current_branch -- {} | curl -s -X POST -H "Content-Type: application/json" -H "Authorization: Bearer $$OPENAI_API_KEY" --data-binary @- https://api.openai.com/v1/chat/completions --data '{"model": "gpt-3.5-turbo", "messages": [{"role": "system", "content": "You are an expert software engineer.\nReview the provided context and diffs which are about to be added to a git repo pull request.\nBreak the changes into logical chunks and generate a *SHORT* 1 line, 1 sentence\nmessage that concisely and accurately describes each change.\nThe message MUST be in the past tense.\nIt must describe the changes *which have been made* in the diffs!\nReply with JUST the pull request message, without quotes, comments, questions, etc!"}]}' > pr_notes.txt; \
+		echo "Pull request notes generated."; \
+		echo "Pull request notes content:"; \
+		cat pr_notes.txt; \
 		git push origin $$current_branch; \
 	fi
