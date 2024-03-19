@@ -31,6 +31,9 @@ confirm_branch:
 
 push:
 	@current_branch=$$(git rev-parse --abbrev-ref HEAD); \
+push:
+	@set -e; \
+	current_branch=$$(git rev-parse --abbrev-ref HEAD); \
 	if [ "$$current_branch" = "main" ]; then \
 		git checkout -b $(BRANCH_NAME); \
 		git tag -a $(BRANCH_NAME) -m "Release $(BRANCH_NAME)"; \
