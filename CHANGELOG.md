@@ -125,3 +125,4 @@
 - 2024-03-19 - Remove - 711ebb5bb950fe409bc27e19c2c67a5876890e9b - 'aider:' prefix from commit messages and changelog in Makefile push target. (David Hooton)
 - 2024-03-19 - Add - 9c5966be8e1dbd2321a44500ce2a321b33c858ca - CI/CD workflow configuration, update changelog, and refactor build process for Python project. (David Hooton)
 - 2024-03-19 - Update - c09ff10673301e787a31476f96289101de2f86cf - CHANGELOG.md (David Hooton)
+- 2024-03-19 - Update - f7b2c27407bb6cbdedbc5a7c7a5367c752df41f2 - CI/CD workflow, modify changelog, improve build scripts, and update Python dependencies. (David Hooton)
