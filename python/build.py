@@ -3,6 +3,7 @@ import os
 import json
 import subprocess
 import sys
+from dotenv import load_dotenv
 
 def check_buildx_available():
     if subprocess.run(["docker", "buildx", "version"], stdout=subprocess.PIPE, stderr=subprocess.PIPE).returncode != 0:
@@ -15,6 +16,9 @@ def increment_version(version):
 
 def main():
     check_buildx_available()
+
+    # Load environment variables from .env file
+    load_dotenv()
 
     # Load Docker configuration from ~/.docker/config.json
     docker_config_path = os.path.expanduser('~/.docker/config.json')
