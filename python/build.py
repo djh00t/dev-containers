@@ -50,7 +50,6 @@ def main():
             "docker", "login",
             "--username", docker_username, "--password-stdin",
             f"{repo}/{app_name}"
-        ], input=docker_password.encode(), stdout=subprocess.PIPE, stderr=subprocess.PIPE)
         ], stdout=subprocess.PIPE, stderr=subprocess.PIPE)
         if login_result.returncode != 0:
             print("Docker login failed. Check your credentials.")
