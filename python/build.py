@@ -37,6 +37,24 @@ def main():
     with open('./VERSION', 'r') as file:
         version = file.read().strip()
     print(f"Building version {version}")
+    # Log in to Docker registry
+    docker_registry = os.getenv('DOCKER_REGISTRY')
+    docker_username = os.getenv('DOCKER_USERNAME')
+    docker_password = os.getenv('DOCKER_PASSWORD')
+    if docker_registry and docker_username and docker_password:
+        login_result = subprocess.run([
+            "docker", "login",
+            "--username", docker_username,
+            "--password", docker_password,
+            docker_registry
+        ], stdout=subprocess.PIPE, stderr=subprocess.PIPE)
+        if login_result.returncode != 0:
+            print("Docker login failed. Check your credentials.")
+            sys.exit(1)
+    else:
+        print("Docker registry login credentials are not set.")
+        sys.exit(1)
+
     result = subprocess.run([
         "docker", "buildx", "build", "--platform", "linux/amd64,linux/arm64",
         "--tag", f"{app_name}:{version}", "--tag", f"{app_name}:latest",
